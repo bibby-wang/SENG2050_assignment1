@@ -2,6 +2,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 @WebServlet(urlPatterns = {"/SixtyFourSeatsTheatre"})
 public class SixtyFourSeatsTheatre extends HttpServlet {
@@ -10,6 +12,8 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String htmlString;
+		Date currentDate = new Date();
+		SimpleDateFormat formatDate = new SimpleDateFormat ("d.MM.Y H:m:s");
 		//FORMAT HTML 
 		htmlString="<!DOCTYPE HTML> <html>"+
 		"<head>"+
@@ -23,7 +27,10 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		"<body>"+
 		"<h2>"+"Sixty Four Seats Theatre"+"</h2>"+
 		"<h2>"+"online seats booking system"+"</h3>"+
+		
+		"<h4>"+"Current time: "+formatDate.format(currentDate)+"</h4>"+
 		"<table border='1'>";
+
 		
 		for(int i=65; i<72;i++){
 			htmlString+="<tr/>";

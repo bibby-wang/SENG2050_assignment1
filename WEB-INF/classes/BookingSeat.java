@@ -41,9 +41,9 @@ public class BookingSeat extends HttpServlet {
 				"<form name='information' action='SaveInformation' onsubmit='return validateCode()' method='GET'>"+
 					"<h2>"+"The seat Number: "+request.getParameter("seatNumber")+"</h2>"+//get the selected seat Number
 					"<h3>"+"Please complete the booking information "+"</h3>"+
-
 					"<br />"+
 				//this is for Development
+					"<input type='hidden' name='seatNumber' value='"+request.getParameter("seatNumber")+"' />"+
 					"UserID: <input type='text' name='UserID' value='ABC' /><br />"+
 					"Phone: <input type='text' name='Phone' value='0123' /><br />"+
 					"Address: <input type='text' name='Address' value='ABC' /><br />"+
