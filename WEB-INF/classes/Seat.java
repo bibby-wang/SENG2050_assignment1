@@ -29,7 +29,7 @@ public class Seat implements java.io.Serializable{
 	public String getUserID(){
 		return userID;
 	}
-	public String getSeatsNum(){
+	public String getSeatsNumber(){
 		return seatNumber;
 	}
 	public String getBookingTime(){

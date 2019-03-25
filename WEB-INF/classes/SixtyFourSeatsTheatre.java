@@ -45,7 +45,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 				String tempSeatNum=seat+""+j;
 				htmlString+=("<td class='"+this.isBooked(tempSeatNum)+"'>"+
 								"<h3>"+
-									"<a href='BookingSeat?seatNumber="+tempSeatNum+"'bookingTime='"+bookingTime+"'>"+
+									"<a href='BookingSeat?seatNumber="+tempSeatNum+"&bookingTime="+bookingTime+"'>"+
 										seat+""+j+
 									"</a>"+
 								"</h3>"+
@@ -93,7 +93,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 			return;
 		}
 		  
-		  //System.out.println("get a seatNum: " + seatsList[0].getSeatsNum());
+		  //System.out.println("get a seatNum: " + seatsList[0].getSeatsNumber());
 	}
 		
 	public String isBooked(String seatNum){
@@ -101,7 +101,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		if (seatsList != null){
 			for (int i=0;i<seatsList.length;i++){
 				if (seatsList[i]!=null){
-					if (seatNum.equals(seatsList[i].getSeatsNum())){
+					if (seatNum.equals(seatsList[i].getSeatsNumber())){
 						//System.out.println("find a booked: "+seatNum+" .");
 						return "Booked";
 						}

@@ -42,7 +42,7 @@ public class BookingSeat extends HttpServlet {
 					"<br />"+
 				//this is for Development
 					"<input type='hidden' name='seatNumber' value='"+seatNumber+"' />"+
-					"<input type='hidden' name='bookingTime' value='"+bookingTime+"' />"+
+					"<input name='bookingTime' value='"+bookingTime+"' />"+
 					"UserID: <input type='text' name='userID' value='ABC' /><br />"+
 					"Phone: <input type='text' name='phone' value='0123' /><br />"+
 					"Address: <input type='text' name='address' value='ABC' /><br />"+
@@ -63,8 +63,11 @@ public class BookingSeat extends HttpServlet {
 				"</form>"+
 			"</body>"+
 		"</html>";
-		outHTML.println(htmlString);
-
+		try{
+			outHTML.println(htmlString);
+		}finally{
+			outHTML.close(); //always close the output writer
+		}
 
 	} 
 	

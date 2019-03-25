@@ -32,7 +32,7 @@ public class User implements java.io.Serializable{
 		this.SecurityCode=SecurityCode;
 	}
 	public boolean addSeat(String SeatNum){
-		
+		System.out.println("sssss "+getEmputySeatsNum()+" "+SeatNum+" "+threeSeats[0]);
 		if (getEmputySeatsNum()<3){
 			this.threeSeats[getEmputySeatsNum()]=SeatNum;
 			return true;
@@ -61,25 +61,33 @@ public class User implements java.io.Serializable{
 		return threeSeats;
 	}
 	
+	public void updateInfo(String phone, String address, String email){
+		this.phone=phone;
+		this.address=address;
+		this.email=email;
+	}
+	
 	//get Emputy seats Num Requirement: no more than 3
 	public int getEmputySeatsNum(){
 		
 		int countNum=0;
 		for(int i=0;i<3;i++){
-			if (threeSeats[i]!="")countNum++;
+			if (threeSeats[i]!=null)countNum++;
 		}
 		return countNum;
 
 	}
 	public String toString(){
+		String seats="null";
+		if (threeSeats[0]!=null){seats=",Seats[0]: "+threeSeats[0];}
+		if (threeSeats[1]!=null){seats+=",Seats[1]: "+threeSeats[1];}
+		if (threeSeats[2]!=null){seats+=",Seats[2]: "+threeSeats[2];}
 		return "userID: "+userID+
 				",phone: "+phone+
 				",address: "+address+
 				",email: "+email+
-				",SecurityCode: "+SecurityCode+
-				",Seats[0]: "+threeSeats[0].toString()+
-				",Seats[1]: "+threeSeats[1].toString()+
-				",Seats[2]: "+threeSeats[2].toString();
+				",SecurityCode: "+SecurityCode+seats;
+
 		
 	}
 	
