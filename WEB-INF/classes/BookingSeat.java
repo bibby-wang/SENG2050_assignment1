@@ -8,19 +8,15 @@ import java.util.Random;
 public class BookingSeat extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		String htmlString;
-		String verifyCode=this.createSecurityCode();
-		htmlString="<!DOCTYPE HTML>"+
+		PrintWriter outHTML = response.getWriter();
+		String htmlString="<!DOCTYPE HTML>";
+		String seatNumber=request.getParameter("seatNumber");//get the selected seat Number
+		String bookingTime=request.getParameter("bookingTime");//get the booking time
+		String verifyCode=this.createSecurityCode();//get verify Code
+		htmlString+=
 		"<html>"+
 			"<head>"+
-			
-		
-				// "<style type='text/css'>"+
-					// "td {background-color: gray}"+
-					// "td.Booked {background-color: gray}"+
-					// "td.unBooked {background-color: green}"+
-				// "</style>"+
+
 				"<title>Booking a Seat</title>"+
 				"<script type='text/javascript'>"+
 					//javascript validate security Code
@@ -39,20 +35,23 @@ public class BookingSeat extends HttpServlet {
 			"<body>"+
 			
 				"<form name='information' action='SaveInformation' onsubmit='return validateCode()' method='GET'>"+
-					"<h2>"+"The seat Number: "+request.getParameter("seatNumber")+"</h2>"+//get the selected seat Number
+					"<h2>"+"The seat Number: "+seatNumber+"</h2>"+
+					"<h2>"+"Booking time: "+bookingTime+"</h2>"+
 					"<h3>"+"Please complete the booking information "+"</h3>"+
+					"<h3><a href='SixtyFourSeatsTheatre'>"+"back to chooose seats page "+"</a></h3>"+
 					"<br />"+
 				//this is for Development
-					"<input type='hidden' name='seatNumber' value='"+request.getParameter("seatNumber")+"' />"+
-					"UserID: <input type='text' name='UserID' value='ABC' /><br />"+
-					"Phone: <input type='text' name='Phone' value='0123' /><br />"+
-					"Address: <input type='text' name='Address' value='ABC' /><br />"+
-					"Email: <input type='text' name='Email' value='ABC@ABC.AC' /><br />"+
+					"<input type='hidden' name='seatNumber' value='"+seatNumber+"' />"+
+					"<input type='hidden' name='bookingTime' value='"+bookingTime+"' />"+
+					"UserID: <input type='text' name='userID' value='ABC' /><br />"+
+					"Phone: <input type='text' name='phone' value='0123' /><br />"+
+					"Address: <input type='text' name='address' value='ABC' /><br />"+
+					"Email: <input type='text' name='email' value='ABC@ABC.AC' /><br />"+
 					"Security code: <input type='text' name='inputSecurityCode' value='"+verifyCode+"' />"+
 					verifyCode+"<br />"+ //Security code
 				//this is for Release
 					
-					// "UserID: <input type='text' name='UserID' /><br />"+
+					// "UserID: <input type='text' name='userID' /><br />"+
 					// "Phone: <input type='text' name='Phone' /><br />"+
 					// "Address: <input type='text' name='Address' /><br />"+
 					// "Email: <input type='text' name='Email' /><br />"+
@@ -64,10 +63,12 @@ public class BookingSeat extends HttpServlet {
 				"</form>"+
 			"</body>"+
 		"</html>";
-		out.println(htmlString);
+		outHTML.println(htmlString);
 
 
 	} 
+	
+	//create the Security Code
 	public String createSecurityCode(){
 		int codeLength=6;
 		String SecurityCode="";
@@ -81,8 +82,5 @@ public class BookingSeat extends HttpServlet {
 		return SecurityCode; // return Security Code
 		
 	}
-	public String isBooked(int num){
-		if ((num%2)<1){return "Booked";}
-		return "unBooked";
-	}
+
 }
