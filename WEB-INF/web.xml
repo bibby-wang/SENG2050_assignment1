@@ -16,7 +16,14 @@
         <servlet-name>c3214157_assignment1</servlet-name>
         <servlet-class>c3214157_assignment1</servlet-class>
     </servlet>
-
+	<filter>
+		<filter-name>seatFilter</filter-name>
+		<filter-class>seatFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>seatFilter</filter-name>
+		<url-pattern>/BookingSeatPage</url-pattern>
+	</filter-mapping>
 	<init-param>
        <param-name>development</param-name>
        <param-value>true</param-value>

@@ -42,5 +42,6 @@ public class Seat implements java.io.Serializable{
 
 	}
 
+
 	
 }

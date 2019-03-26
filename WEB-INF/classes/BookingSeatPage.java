@@ -4,15 +4,20 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
 import java.util.Random;
 
-@WebServlet(urlPatterns = {"/BookingSeat"})
-public class BookingSeat extends HttpServlet {
+@WebServlet(urlPatterns = {"/BookingSeatPage"})
+public class BookingSeatPage extends HttpServlet {
+
+
+	
+	
+	
     public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		PrintWriter outHTML = response.getWriter();
 		String htmlString="<!DOCTYPE HTML>";
 		String seatNumber=request.getParameter("seatNumber");//get the selected seat Number
 		String bookingTime=request.getParameter("bookingTime");//get the booking time
-		String verifyCode=this.createSecurityCode();//get verify Code
+		public String verifyCode=this.createSecurityCode();//get verify Code
 		htmlString+=
 		"<html>"+
 			"<head>"+
@@ -38,15 +43,15 @@ public class BookingSeat extends HttpServlet {
 					"<h2>"+"The seat Number: "+seatNumber+"</h2>"+
 					"<h2>"+"Booking time: "+bookingTime+"</h2>"+
 					"<h3>"+"Please complete the booking information "+"</h3>"+
-					"<h3><a href='SixtyFourSeatsTheatre'>"+"back to chooose seats page "+"</a></h3>"+
+					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>"+
 					"<br />"+
 				//this is for Development
 					"<input type='hidden' name='seatNumber' value='"+seatNumber+"' />"+
-					"<input name='bookingTime' value='"+bookingTime+"' />"+
-					"UserID: <input type='text' name='userID' value='ABC' /><br />"+
-					"Phone: <input type='text' name='phone' value='0123' /><br />"+
-					"Address: <input type='text' name='address' value='ABC' /><br />"+
-					"Email: <input type='text' name='email' value='ABC@ABC.AC' /><br />"+
+					"<input type='hidden' name='bookingTime' value='"+bookingTime+"' />"+
+					"UserID: <input type='text' name='userID' /><br />"+
+					"Phone: <input type='text' name='phone' /><br />"+
+					"Address: <input type='text' name='address' /><br />"+
+					"Email: <input type='text' name='email' /><br />"+
 					"Security code: <input type='text' name='inputSecurityCode' value='"+verifyCode+"' />"+
 					verifyCode+"<br />"+ //Security code
 				//this is for Release
@@ -70,6 +75,12 @@ public class BookingSeat extends HttpServlet {
 		}
 
 	} 
+
+
+
+
+
+
 	
 	//create the Security Code
 	public String createSecurityCode(){
@@ -85,5 +96,6 @@ public class BookingSeat extends HttpServlet {
 		return SecurityCode; // return Security Code
 		
 	}
+	
 
 }

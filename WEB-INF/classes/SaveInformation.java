@@ -23,8 +23,7 @@ public class SaveInformation extends HttpServlet {
 		address=request.getParameter("address");
 		email=request.getParameter("email");
 		securityCode=request.getParameter("inputSecurityCode");
-		
-		
+
 		//get users and seats list from data file
 
 		getAllList();
@@ -47,6 +46,10 @@ public class SaveInformation extends HttpServlet {
 					}else{
 						System.out.println("=="+userID+"====seat 3 full!!");
 						System.out.println("=="+usersList[i].toString()+"==");
+						
+						
+						
+						
 						return;
 					}
 					
