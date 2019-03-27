@@ -18,18 +18,19 @@ public class seatFilter implements Filter {
 		}else{
 			response.setContentType("text/html");
 			PrintWriter outHTML = response.getWriter();
-			String htmlString="<!DOCTYPE HTML>"+
-			"<html>"+
-				"<head>"+
-					"<title>Message of booking erro</title>"+
+			String htmlString="<!DOCTYPE HTML>\n"+
+			"<html>\n"+
+				"<head>\n"+
+					"<meta charset='utf-8'>\n"+
+					"<title>Message of booking erro</title>\n"+
 				"</head>"+
 				"<body>"+
-					"<h3>this seat already booked by:</h3>"+
-					"<br/>UserID: "+seatsList[seatArryNum].getUserID()+
-					"<br/>Time: "+seatsList[seatArryNum].getBookingTime()+
-					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>"+			
-				"</body>"+
-			"</html>";
+					"<h3>This seat already booked by:</h3><br/>\n"+
+					"<h3>UserID: "+seatsList[seatArryNum].getUserID()+"</h3>\n"+
+					"<h3>Time: "+seatsList[seatArryNum].getBookingTime()+"</h3>\n"+
+					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>\n"+			
+				"</body>\n"+
+			"</html>\n";
 			
 			try{
 				outHTML.println(htmlString);

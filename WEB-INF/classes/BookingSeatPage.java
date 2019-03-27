@@ -18,31 +18,30 @@ public class BookingSeatPage extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		PrintWriter outHTML = response.getWriter();
-		String htmlString="<!DOCTYPE HTML>";
+		String htmlString="<!DOCTYPE HTML>\n";
 		seatNumber=request.getParameter("seatNumber");//get the selected seat Number
 		bookingTime=request.getParameter("bookingTime");//get the booking time
 		verifyCode=this.createSecurityCode();//get verify Code
 		htmlString+=
-		"<html>"+
-			"<head>"+
-				"<title>Booking a Seat</title>"+
-				"<script src='validateInput.js' type='text/javascript' >"+
+		"<html>\n"+
+			"<head>\n"+
+				"<meta charset='utf-8'>\n"+
 
-
-				
-				"</script>"+
-			"</head>"+
-			"<body>"+
+				"<script src='validateInput.js' type='text/javascript' >\n"+
+				"</script>\n"+
+				"<title>Booking a Seat</title>\n"+				
+			"</head>\n"+
+			"<body>\n"+
 			
-				"<form name='information' action='#' onsubmit='return validateInput()' method='post'>"+
+				"<form name='information' action='#' onsubmit='return validateInput()' method='post'>\n"+
 				
-					"<h2>"+"The seat Number: "+seatNumber+"</h2>"+
-					"<h2>"+"Booking time: "+bookingTime+"</h2>"+
-					"<h3>"+"Please complete the booking information "+"</h3>"+
-					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>"+
-					"<br />"+
-					"<input type='hidden' name='seatNumber' value='"+seatNumber+"' />"+
-					"<input type='hidden' name='bookingTime' value='"+bookingTime+"' />"+
+					"<h2>"+"The seat Number: "+seatNumber+"</h2>\n"+
+					"<h2>"+"Booking time: "+bookingTime+"</h2>\n"+
+					"<h3>"+"Please complete the booking information "+"</h3>\n"+
+					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>\n"+
+					"<br />\n"+
+					"<input type='hidden' name='seatNumber' value='"+seatNumber+"' />\n"+
+					"<input type='hidden' name='bookingTime' value='"+bookingTime+"' />\n"+
 				//this is for Development					
 					// "UserID: <input type='text' name='userID' value='ABC' /><br />"+
 					// "Phone: <input type='text' name='phone' value='0123' /><br />"+
@@ -52,17 +51,17 @@ public class BookingSeatPage extends HttpServlet {
 					// verifyCode+"<br />"+ //Security code
 				//this is for Release
 					
-					"UserID: <input type='text' name='userID' /><br />"+
-					"Phone: <input type='text' name='Phone' /><br />"+
-					"Address: <input type='text' name='Address' /><br />"+
-					"Email: <input type='text' name='email' /><br />"+
+					"UserID: <input type='text' name='userID' /><br />\n"+
+					"Phone: <input type='text' name='Phone' /><br />\n"+
+					"Address: <input type='text' name='Address' /><br />\n"+
+					"Email: <input type='text' name='email' /><br />\n"+
 					"Security code: <input type='text' name='inputSecurityCode' />"+
-					verifyCode+"<br />"+ //Security code
+					verifyCode+"<br />\n"+ //Security code
 					
-					"<input type='submit' value='Submit' /> "+
-					"<input type='reset' value='clear' />"+
-				"</form>"+
-			"</body>"+
+					"<input type='submit' value='Submit' />\n"+
+					"<input type='reset' value='clear' />\n"+
+				"</form>\n"+
+			"</body>\n"+
 		"</html>";
 		getAllList();
 		try{
@@ -111,7 +110,18 @@ public class BookingSeatPage extends HttpServlet {
 						threSeatFull=true;
 						
 						PrintWriter outHTML = response.getWriter();
-						String htmlString="<!DOCTYPE HTML><html><head><title>Booking a Seat</title></head><body><h2>Your can not have more than 3 bookings</h2><h3><a href='SixtyFourSeatsTheatre'>Back to main page</a></h3><br /></body></html>";
+						String htmlString="<!DOCTYPE HTML>\n"+
+						"<html>\n"+
+
+							"<head>\n"+
+							"<meta charset='utf-8'>\n"+
+								"<title>Booking a Seat</title>\n"+
+							"</head>\n"+
+							"<body>\n"+
+								"<h2>Your can not have more than 3 bookings</h2><br />\n"+
+								"<h3><a href='SixtyFourSeatsTheatre'>Back to main page</a></h3>\n"+
+							"</body>\n"+
+						"</html>";
 						
 						try{
 							outHTML.println(htmlString);
