@@ -8,7 +8,7 @@ import java.util.Random;
 public class BookingSeatPage extends HttpServlet {
 	private Seat[] seatsList;
 	private User[] usersList;
-	private String bookingTime,seatNumber,userID, phone, address, email,securityCode;
+	private String bookingTime,seatNumber,userID, phone, address, email, securityCode;
 	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";
 	private String addressUesrsData="../webapps/c3214157_assignment1/WEB-INF/data/usersData.ser";	
 	private String verifyCode;//get verify Code
@@ -41,8 +41,8 @@ public class BookingSeatPage extends HttpServlet {
 				//this is for Release
 
 					"UserID: <input type='text' name='userID' /><br />\n"+
-					"Phone: <input type='text' name='Phone' /><br />\n"+
-					"Address: <input type='text' name='Address' /><br />\n"+
+					"Phone: <input type='text' name='phone' /><br />\n"+
+					"Address: <input type='text' name='address' /><br />\n"+
 					"Email: <input type='text' name='email' /><br />\n"+
 					"Security code: <input type='text' name='inputSecurityCode' />"+
 					verifyCode+"<br />\n"+ //Security code
@@ -75,12 +75,14 @@ public class BookingSeatPage extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		securityCode=request.getParameter("inputSecurityCode");
-		if (!securityCode.equals(verifyCode)){
-			System.out.println("=Security Code not match!");
-			doGet(request,response);
-			return;
-		}
+		//check secyrity code on sever site
+		// securityCode=request.getParameter("inputSecurityCode");
+		// if (!securityCode.equals(verifyCode)){
+			// System.out.println("=Security Code not match!");
+			// doGet(request,response);
+			// return;
+		// }
+		
 		//get all information data
 		
 
@@ -88,7 +90,7 @@ public class BookingSeatPage extends HttpServlet {
 		phone=request.getParameter("phone");
 		address=request.getParameter("address");
 		email=request.getParameter("email");
-
+		
 
 		//get users and seats list from data file
 
@@ -110,7 +112,7 @@ public class BookingSeatPage extends HttpServlet {
 					if (usersList[i].addSeat(seatNumber)){
 						//updata information
 						usersList[i].updateInfo(phone,address,email);
-						System.out.println("=="+userID+"===update=done");						
+						System.out.println("=="+userID+"===update=Done==");						
 					}else{
 						threSeatFull=true;
 						
@@ -149,7 +151,7 @@ public class BookingSeatPage extends HttpServlet {
 				newUser.setPhone(phone);
 				newUser.setAddress(address);
 				newUser.setEmail(email);
-				newUser.setSecurityCode(securityCode);
+				//newUser.setSecurityCode(securityCode);
 				newUser.addSeat(seatNumber);
 				addNewUser(newUser);
 			}
@@ -163,7 +165,7 @@ public class BookingSeatPage extends HttpServlet {
 			newUser.setPhone(phone);
 			newUser.setAddress(address);
 			newUser.setEmail(email);
-			newUser.setSecurityCode(securityCode);
+			//newUser.setSecurityCode(securityCode);
 			newUser.addSeat(seatNumber);
 			addNewUser(newUser);
 		}

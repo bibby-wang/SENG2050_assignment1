@@ -76,13 +76,13 @@ public class seatFilter implements Filter {
 				//System.out.printf("seat information data is saved");
 				
 			}catch(IOException outE){
+				System.out.println("File not found-seatFilter");
 				outE.printStackTrace();
-
 			}
 			//i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException c){
-			System.out.println(" class not found");
+			System.out.println("Class not found-seatFilter");
 			c.printStackTrace();
 			return;
 		}

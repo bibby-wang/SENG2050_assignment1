@@ -3,14 +3,14 @@ public class User implements java.io.Serializable{
 	private String phone;
 	private String address;
 	private String email;
-	private String SecurityCode;
+	//private String SecurityCode;
 	private String[] threeSeats;
 	public User(){
 		userID="";
 		phone="";
 		address="";
 		email="";
-		SecurityCode="";
+		//SecurityCode="";
 		threeSeats=new String[3];	
 	}
 	
@@ -28,11 +28,11 @@ public class User implements java.io.Serializable{
 	public void setEmail(String email){
 		this.email=email;
 	}
-	public void setSecurityCode(String SecurityCode){
-		this.SecurityCode=SecurityCode;
-	}
+	// public void setSecurityCode(String SecurityCode){
+		// this.SecurityCode=SecurityCode;
+	// }
 	public boolean addSeat(String SeatNum){
-		System.out.println("sssss "+getEmputySeatsNum()+" "+SeatNum+" "+threeSeats[0]);
+		//System.out.println("sssss "+getEmputySeatsNum()+" "+SeatNum+" "+threeSeats[0]);
 		if (getEmputySeatsNum()<3){
 			this.threeSeats[getEmputySeatsNum()]=SeatNum;
 			return true;
@@ -54,9 +54,9 @@ public class User implements java.io.Serializable{
 	public String getEmail(){
 		return email;
 	}
-	public String getSecurityCode(){
-		return SecurityCode;
-	}
+	// public String getSecurityCode(){
+		// return SecurityCode;
+	// }
 	public String[] getSeats(){
 		return threeSeats;
 	}
@@ -86,7 +86,8 @@ public class User implements java.io.Serializable{
 				",phone: "+phone+
 				",address: "+address+
 				",email: "+email+
-				",SecurityCode: "+SecurityCode+seats;
+				//",SecurityCode: "+SecurityCode+
+				seats;
 
 		
 	}
