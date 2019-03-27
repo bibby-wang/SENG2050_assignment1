@@ -14,10 +14,10 @@ public class seatFilter implements Filter {
 		if(seatArryNum<0){
 			
 
-			chain.doFilter(request, response);			
+			chain.doFilter(request, response);
 		}else{
 			response.setContentType("text/html");
-			PrintWriter outHTML = response.getWriter();			
+			PrintWriter outHTML = response.getWriter();
 			String htmlString="<!DOCTYPE HTML>"+
 			"<html>"+
 				"<head>"+
