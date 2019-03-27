@@ -31,6 +31,7 @@ public class SixtyFourSeatsTheatreDatabase extends HttpServlet {
 
 		this.getSeatList();
 		this.getUsersList();
+		htmlString+="<p/>===seats file data====<p/>";
 		for (int i=0;i<64;i++){
 			if(seatsList[i]!=null){
 				htmlString+=seatsList[i].toString();
@@ -38,6 +39,7 @@ public class SixtyFourSeatsTheatreDatabase extends HttpServlet {
 			}
 		}
 		htmlString+="<p/>======================================<p/>";
+		htmlString+="<p/>===users flie data====<p/>";
 		for (int i=0;i<64;i++){
 			if(usersList[i]!=null){
 				htmlString+=usersList[i].toString();
@@ -58,27 +60,14 @@ public class SixtyFourSeatsTheatreDatabase extends HttpServlet {
 	public void getSeatList(){
 		
 		try{
-			FileInputStream seatsFile = new FileInputStream("../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser");
+			FileInputStream seatsFile = new FileInputStream(addressSeatsData);
 			ObjectInputStream seatData = new ObjectInputStream(seatsFile);
 			seatsList = (Seat[]) seatData.readObject();
 			seatData.close();
 			seatsFile.close();
 		}catch(IOException i){
-			try{
-				
-				FileOutputStream seatsDataFileOut = new FileOutputStream("../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser");
-				ObjectOutputStream seatsDataOut = new ObjectOutputStream(seatsDataFileOut);
-				seatsDataOut.writeObject(seatsList);
-				seatsDataOut.close();
-				seatsDataFileOut.close();
-				
-				//System.out.printf("seat information data is saved");
-				
-			}catch(IOException outE){
-				outE.printStackTrace();
-
-			}
-			//i.printStackTrace();
+			System.out.println(" file not found");
+			i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException c){
 			System.out.println(" class not found");
@@ -98,21 +87,8 @@ public class SixtyFourSeatsTheatreDatabase extends HttpServlet {
 			usersData.close();
 			usersFile.close();
 		}catch(IOException i){
-			try{
-				
-				FileOutputStream usersDataFileOut = new FileOutputStream(addressUesrsData);
-				ObjectOutputStream usersDataOut = new ObjectOutputStream(usersDataFileOut);
-				usersDataOut.writeObject(usersList);
-				usersDataOut.close();
-				usersDataFileOut.close();
-				
-				//System.out.printf("seat information data is saved");
-				
-			}catch(IOException outE){
-				outE.printStackTrace();
-
-			}
-			//i.printStackTrace();
+			System.out.println(" file not found");
+			i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException c){
 			System.out.println(" class not found");

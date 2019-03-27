@@ -37,8 +37,8 @@ public class Seat implements java.io.Serializable{
 	}
 	public String toString(){
 		return "seatNumber: "+seatNumber+
-				",userID: "+userID+
-				",bookingTime: "+bookingTime;
+				" ,userID: "+userID+
+				" ,bookingTime: "+bookingTime;
 
 	}
 

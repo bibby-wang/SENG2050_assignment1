@@ -79,13 +79,13 @@ public class User implements java.io.Serializable{
 	}
 	public String toString(){
 		String seats="null";
-		if (threeSeats[0]!=null){seats=",Seats[0]: "+threeSeats[0];}
-		if (threeSeats[1]!=null){seats+=",Seats[1]: "+threeSeats[1];}
-		if (threeSeats[2]!=null){seats+=",Seats[2]: "+threeSeats[2];}
+		if (threeSeats[0]!=null){seats=" ,Seats[0]: "+threeSeats[0];}
+		if (threeSeats[1]!=null){seats+=" ,Seats[1]: "+threeSeats[1];}
+		if (threeSeats[2]!=null){seats+=" ,Seats[2]: "+threeSeats[2];}
 		return "userID: "+userID+
-				",phone: "+phone+
-				",address: "+address+
-				",email: "+email+
+				" ,phone: "+phone+
+				" ,address: "+address+
+				" ,email: "+email+
 				//",SecurityCode: "+SecurityCode+
 				seats;
 

@@ -17,7 +17,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		PrintWriter outHTML = response.getWriter();
 		String htmlString;
 		Date currentDate = new Date();
-		SimpleDateFormat formatDate = new SimpleDateFormat ("dd.MM.YY_HH:mm:ss");
+		SimpleDateFormat formatDate = new SimpleDateFormat ("dd-MM-YY HH-mm-ss");
 		String bookingTime=formatDate.format(currentDate);
 		//FORMAT HTML 
 		htmlString="<!DOCTYPE html>\n <html>\n"+
