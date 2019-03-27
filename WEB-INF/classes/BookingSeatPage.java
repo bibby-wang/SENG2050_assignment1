@@ -9,13 +9,10 @@ public class BookingSeatPage extends HttpServlet {
 	private Seat[] seatsList;
 	private User[] usersList;
 	private String bookingTime,seatNumber,userID, phone, address, email,securityCode;
-
-	
 	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";
 	private String addressUesrsData="../webapps/c3214157_assignment1/WEB-INF/data/usersData.ser";	
 	private String verifyCode;//get verify Code
-	
-	
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		PrintWriter outHTML = response.getWriter();
@@ -42,14 +39,14 @@ public class BookingSeatPage extends HttpServlet {
 					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>\n"+
 					"<br />\n"+
 				//this is for Release
-				/////////////////
+
 					"UserID: <input type='text' name='userID' /><br />\n"+
 					"Phone: <input type='text' name='Phone' /><br />\n"+
 					"Address: <input type='text' name='Address' /><br />\n"+
 					"Email: <input type='text' name='email' /><br />\n"+
 					"Security code: <input type='text' name='inputSecurityCode' />"+
 					verifyCode+"<br />\n"+ //Security code
-
+				////////////////////////////////////
 					//this is for Development					
 					// "UserID: <input type='text' name='userID' value='ABC' /><br />"+
 					// "Phone: <input type='text' name='phone' value='0123' /><br />"+
@@ -80,6 +77,7 @@ public class BookingSeatPage extends HttpServlet {
 	throws ServletException, IOException {
 		securityCode=request.getParameter("inputSecurityCode");
 		if (!securityCode.equals(verifyCode)){
+			System.out.println("=Security Code not match!");
 			doGet(request,response);
 			return;
 		}
@@ -178,7 +176,7 @@ public class BookingSeatPage extends HttpServlet {
 		newSeat.setUserID(userID);
 
 		//save all information to file
-		//befor save information, need check is the userID already hava
+
 
 		addNewSeat(newSeat);
 
@@ -190,7 +188,7 @@ public class BookingSeatPage extends HttpServlet {
 		//PrintWriter out = response.getWriter();
 		//out.println(seatNumber+":"+userID+"; "+phone+"; "+address+"; "+email+"; "+securityCode);
 		//sever part message
-		System.out.println(seatNumber+":"+userID+"; "+phone+"; "+address+"; "+email+"; "+securityCode);
+		//System.out.println(seatNumber+":"+userID+"; "+phone+"; "+address+"; "+email+"; "+securityCode);
 		System.out.println("============DONE==============");
 
 		response.sendRedirect("SixtyFourSeatsTheatre");		
@@ -258,7 +256,7 @@ public class BookingSeatPage extends HttpServlet {
 				if (seatsList[i]==null){
 					seatsList[i]=newSeat;
 					
-					System.out.println(" newSeat: ["+i+"]");
+					//System.out.println(" newSeat: ["+i+"]");
 					break;
 				}
 			}
@@ -278,7 +276,7 @@ public class BookingSeatPage extends HttpServlet {
 				if (usersList[i]==null){
 					usersList[i]=newUser;
 					
-					System.out.println(" newUser: ["+i+"]");
+					//System.out.println(" newUser: ["+i+"]");
 					break;
 				}
 			}

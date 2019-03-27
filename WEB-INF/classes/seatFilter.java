@@ -4,7 +4,7 @@ import javax.servlet.*;
 public class seatFilter implements Filter {
 	private Seat[] seatsList;
 	private String seatNumber;
-
+	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";
 	public void doFilter(ServletRequest request, ServletResponse response,
 	FilterChain chain) throws IOException, ServletException {
 		getSeatList();
@@ -12,8 +12,6 @@ public class seatFilter implements Filter {
 		int seatArryNum=this.getBookedNumber(seatNumber);
 		System.out.println("run filter!!!");
 		if(seatArryNum<0){
-			
-
 			chain.doFilter(request, response);
 		}else{
 			response.setContentType("text/html");
@@ -40,7 +38,7 @@ public class seatFilter implements Filter {
 		}
 	}
 
-	
+	//get booked seat number taht in seats[] 
 	public int getBookedNumber(String seatNum){
 		//System.out.println("seatN: "+seatNum+" .");
 		if (seatsList != null){
@@ -57,11 +55,11 @@ public class seatFilter implements Filter {
 		return -1;
 	}
 	
-	
+	//get seatlist if not find file create a new one
 	public void getSeatList(){
 		
 		try{
-			FileInputStream seatsFile = new FileInputStream("../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser");
+			FileInputStream seatsFile = new FileInputStream(addressSeatsData);
 			ObjectInputStream seatData = new ObjectInputStream(seatsFile);
 			seatsList = (Seat[]) seatData.readObject();
 			seatData.close();
@@ -69,7 +67,7 @@ public class seatFilter implements Filter {
 		}catch(IOException i){
 			try{
 				
-				FileOutputStream seatsDataFileOut = new FileOutputStream("../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser");
+				FileOutputStream seatsDataFileOut = new FileOutputStream(addressSeatsData);
 				ObjectOutputStream seatsDataOut = new ObjectOutputStream(seatsDataFileOut);
 				seatsDataOut.writeObject(seatsList);
 				seatsDataOut.close();

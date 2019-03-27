@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 @WebServlet(urlPatterns = {"/SixtyFourSeatsTheatre"})
 public class SixtyFourSeatsTheatre extends HttpServlet {
 	private Seat[] seatsList;
+	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";
 	
 	
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -43,7 +44,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 			for (int j=1;j<=8;j++){
 				char seat;
 				seat = (char)i;
-				//
+				//output all seats 8*8 matrix 
 				String tempSeatNum=seat+""+j;
 				htmlString+=("<td class='"+this.isBooked(tempSeatNum)+"'>\n"+
 								"<h3>"+
@@ -67,7 +68,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 	public void getSeatList(){
 		
 		try{
-			FileInputStream seatsFile = new FileInputStream("../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser");
+			FileInputStream seatsFile = new FileInputStream(addressSeatsData);
 			ObjectInputStream seatData = new ObjectInputStream(seatsFile);
 			seatsList = (Seat[]) seatData.readObject();
 			seatData.close();
@@ -75,7 +76,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		}catch(IOException i){
 			try{
 				
-				FileOutputStream seatsDataFileOut = new FileOutputStream("../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser");
+				FileOutputStream seatsDataFileOut = new FileOutputStream(addressSeatsData);
 				ObjectOutputStream seatsDataOut = new ObjectOutputStream(seatsDataFileOut);
 				seatsDataOut.writeObject(seatsList);
 				seatsDataOut.close();
