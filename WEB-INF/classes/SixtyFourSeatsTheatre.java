@@ -16,44 +16,46 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		PrintWriter outHTML = response.getWriter();
 		String htmlString;
 		Date currentDate = new Date();
-		SimpleDateFormat formatDate = new SimpleDateFormat ("dd.MM.YY HH:mm:ss");
+		SimpleDateFormat formatDate = new SimpleDateFormat ("dd.MM.YY_HH:mm:ss");
 		String bookingTime=formatDate.format(currentDate);
 		//FORMAT HTML 
-		htmlString="<!DOCTYPE HTML> <html>"+
-		"<head>"+
-			"<style type='text/css'>"+
-				"td {background-color: gray}"+
-				"td.Booked {background-color: gray}"+
-				"td.unBooked {background-color: green}"+
-			"</style>"+
-			"<title>Sixty Four Seats</title>"+
-		"</head>"+
-		"<body>"+
-		"<h2>"+"Sixty Four Seats Theatre"+"</h2>"+
-		"<h2>"+"online seats booking system"+"</h2>"+
-		"<h4>"+"Current time: "+bookingTime+"</h4>"+
-		"<h4>"+"please choose a seat"+"</h4>"+
-		"<table border='1'>";
+		htmlString="<!DOCTYPE html>\n <html>\n"+
+		"<head>\n"+
+		"<meta charset='utf-8'>\n"+
+			"<style type='text/css'>\n"+
+				"table {border: 1px}\n"+
+				"td {background-color: gray}\n"+
+				"td.Booked {background-color: gray}\n"+
+				"td.unBooked {background-color: green}\n"+
+			"</style>\n"+
+			"<title>Sixty Four Seats</title>\n"+
+		"</head>\n"+
+		"<body>\n"+
+		"<h2>"+"Sixty Four Seats Theatre"+"</h2>\n"+
+		"<h2>"+"online seats booking system"+"</h2>\n"+
+		"<h4>"+"Current time: "+bookingTime+"</h4>\n"+
+		"<h4>"+"please choose a seat"+"</h4>\n"+
+		"<table>\n";
 
 		this.getSeatList();
 		for(int i=65; i<72;i++){
-			htmlString+="<tr/>";
+			htmlString+="<tr>\n";
 			for (int j=1;j<=8;j++){
 				char seat;
 				seat = (char)i;
 				//
 				String tempSeatNum=seat+""+j;
-				htmlString+=("<td class='"+this.isBooked(tempSeatNum)+"'>"+
+				htmlString+=("<td class='"+this.isBooked(tempSeatNum)+"'>\n"+
 								"<h3>"+
 									"<a href='BookingSeatPage?seatNumber="+tempSeatNum+
 									"&bookingTime="+bookingTime+"'>"+tempSeatNum+
 									"</a>"+
-								"</h3>"+
-								"</td>");
+								"</h3>\n"+
+								"</td>\n");
 			}
-			htmlString+="<tr/>";
+			htmlString+="</tr>\n";
 		}
-		htmlString+="</table></body></html>";
+		htmlString+="</table>\n</body>\n</html>\n";
 		try{
 			outHTML.println(htmlString);
 		}finally{

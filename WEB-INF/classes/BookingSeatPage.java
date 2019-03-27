@@ -97,19 +97,27 @@ public class BookingSeatPage extends HttpServlet {
 			}	
 		}
 		if (usersList!=null){
+			
 			boolean notFindID=true;
+			boolean threSeatFull=false;
 			for (int i=0;i<usersList.length;i++){
 				if(usersList[i]!=null && usersList[i].getUserID().equals(userID)){
 					notFindID=false;
 					if (usersList[i].addSeat(seatNumber)){
 						//updata information
 						usersList[i].updateInfo(phone,address,email);
-						System.out.println("=="+userID+"====done");						
+						System.out.println("=="+userID+"===update=done");						
 					}else{
-						System.out.println("=="+userID+"====seat 3 full!!");
-						System.out.println("=="+usersList[i].toString()+"==");
-
+						threSeatFull=true;
 						
+						PrintWriter outHTML = response.getWriter();
+						String htmlString="<!DOCTYPE HTML><html><head><title>Booking a Seat</title></head><body><h2>Your can not have more than 3 bookings</h2><h3><a href='SixtyFourSeatsTheatre'>Back to main page</a></h3><br /></body></html>";
+						
+						try{
+							outHTML.println(htmlString);
+						}finally{
+							outHTML.close(); //always close the output writer
+						}
 						
 						return;
 					}
@@ -147,7 +155,7 @@ public class BookingSeatPage extends HttpServlet {
 			
 	
 
-		
+
 		// new a seat object
 		Seat newSeat=new Seat();			
 
@@ -160,10 +168,9 @@ public class BookingSeatPage extends HttpServlet {
 		//befor save information, need check is the userID already hava
 
 		addNewSeat(newSeat);
+
 		saveSeatInformation();
 		saveUserInformation();
-
-
 		
 
 
