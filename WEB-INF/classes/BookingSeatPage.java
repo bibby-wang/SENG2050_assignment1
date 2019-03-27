@@ -25,47 +25,39 @@ public class BookingSeatPage extends HttpServlet {
 		htmlString+=
 		"<html>"+
 			"<head>"+
-
 				"<title>Booking a Seat</title>"+
-				"<script type='text/javascript'>"+
-					//javascript validate security Code
-					"function validateCode() {"+
-						
-						"var inputCode=document.forms['information']['inputSecurityCode'].value.toUpperCase();"+ //get the input 
-						"var verifyCode='"+verifyCode+"';"+ //set the verify Code
-						"if (verifyCode != inputCode){"+ //Compared
-							"alert('Security Code: '+inputCode+' not match!');"+ //warning messages
-							"return false;"+ //stop transfer data
-							"}"+
-						"}"+
+				"<script src='validateInput.js' type='text/javascript' >"+
+
+
 				
 				"</script>"+
 			"</head>"+
 			"<body>"+
 			
-				"<form name='information' action='#' onsubmit='return validateCode()' method='post'>"+
+				"<form name='information' action='#' onsubmit='return validateInput()' method='post'>"+
+				
 					"<h2>"+"The seat Number: "+seatNumber+"</h2>"+
 					"<h2>"+"Booking time: "+bookingTime+"</h2>"+
 					"<h3>"+"Please complete the booking information "+"</h3>"+
 					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>"+
 					"<br />"+
-				//this is for Development
 					"<input type='hidden' name='seatNumber' value='"+seatNumber+"' />"+
 					"<input type='hidden' name='bookingTime' value='"+bookingTime+"' />"+
-					"UserID: <input type='text' name='userID' /><br />"+
-					"Phone: <input type='text' name='phone' /><br />"+
-					"Address: <input type='text' name='address' /><br />"+
-					"Email: <input type='text' name='email' /><br />"+
-					"Security code: <input type='text' name='inputSecurityCode' value='"+verifyCode+"' />"+
-					verifyCode+"<br />"+ //Security code
-				//this is for Release
-					
-					// "UserID: <input type='text' name='userID' /><br />"+
-					// "Phone: <input type='text' name='Phone' /><br />"+
-					// "Address: <input type='text' name='Address' /><br />"+
-					// "Email: <input type='text' name='Email' /><br />"+
+				//this is for Development					
+					// "UserID: <input type='text' name='userID' value='ABC' /><br />"+
+					// "Phone: <input type='text' name='phone' value='0123' /><br />"+
+					// "Address: <input type='text' name='address' value='ABC' /><br />"+
+					// "Email: <input type='text' name='email' value='ABC@ABC.AC' /><br />"+
 					// "Security code: <input type='text' name='inputSecurityCode' />"+
 					// verifyCode+"<br />"+ //Security code
+				//this is for Release
+					
+					"UserID: <input type='text' name='userID' /><br />"+
+					"Phone: <input type='text' name='Phone' /><br />"+
+					"Address: <input type='text' name='Address' /><br />"+
+					"Email: <input type='text' name='email' /><br />"+
+					"Security code: <input type='text' name='inputSecurityCode' />"+
+					verifyCode+"<br />"+ //Security code
 					
 					"<input type='submit' value='Submit' /> "+
 					"<input type='reset' value='clear' />"+
@@ -164,17 +156,15 @@ public class BookingSeatPage extends HttpServlet {
 		newSeat.setSeatNumber(seatNumber);		
 		newSeat.setUserID(userID);
 
+		//save all information to file
+		//befor save information, need check is the userID already hava
 
 		addNewSeat(newSeat);
 		saveSeatInformation();
 		saveUserInformation();
 
 
-		//check booking Seat number
-		//todo...
 		
-		//save information to file
-		//befor save information, need check is the userID already hava
 
 
 		
@@ -241,28 +231,9 @@ public class BookingSeatPage extends HttpServlet {
 			return;
 		}
 		  
-		  //System.out.println("get a seatNum: " + seatsList[0].getSeatsNumber());
+
 	}
 	public void addNewSeat(Seat newSeat){
-		// try{
-			// FileInputStream inputFile = new FileInputStream(addressSeatsData);
-			// ObjectInputStream inputData = new ObjectInputStream(inputFile);
-			
-			// seatsList = (Seat[]) inputData.readObject();
-			// inputData.close();
-			// inputFile.close();
-		// }catch(IOException i){
-			// System.out.println(" file not found");
-			// i.printStackTrace();
-			// return;
-		// }catch(ClassNotFoundException c){
-			// System.out.println(" class not found");
-			// c.printStackTrace();
-			// return;
-		// }
-		
-
-		
 		
 		if (seatsList != null){
 	
@@ -283,21 +254,7 @@ public class BookingSeatPage extends HttpServlet {
 	}
 
 	public void addNewUser(User newUser){
-		// try{
-			// FileInputStream inputFile = new FileInputStream(addressUesrsData);
-			// ObjectInputStream inputData = new ObjectInputStream(inputFile);
-			// usersList = (User[]) inputData.readObject();
-			// inputData.close();
-			// inputFile.close();
-		// }catch(IOException i){
-			// System.out.println(" file not found");
-			// i.printStackTrace();
-			// return;
-		// }catch(ClassNotFoundException c){
-			// System.out.println(" class not found");
-			// c.printStackTrace();
-			// return;
-		// }
+
 		if (usersList != null){
 			for (int i=1;i<usersList.length;i++){
 				if (usersList[i]==null){
