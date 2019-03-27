@@ -9,6 +9,7 @@ public class BookingSeatPage extends HttpServlet {
 	private Seat[] seatsList;
 	private User[] usersList;
 	private String bookingTime,seatNumber,userID, phone, address, email,securityCode;
+
 	
 	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";
 	private String addressUesrsData="../webapps/c3214157_assignment1/WEB-INF/data/usersData.ser";	
@@ -22,42 +23,43 @@ public class BookingSeatPage extends HttpServlet {
 		seatNumber=request.getParameter("seatNumber");//get the selected seat Number
 		bookingTime=request.getParameter("bookingTime");//get the booking time
 		verifyCode=this.createSecurityCode();//get verify Code
+
 		htmlString+=
 		"<html>\n"+
 			"<head>\n"+
 				"<meta charset='utf-8'>\n"+
-
-				"<script src='validateInput.js' type='text/javascript' >\n"+
-				"</script>\n"+
+				"<script src='validateInput.js' type='text/javascript' ></script>\n"+
+				
 				"<title>Booking a Seat</title>\n"+				
 			"</head>\n"+
 			"<body>\n"+
 			
-				"<form name='information' action='#' onsubmit='return validateInput()' method='post'>\n"+
+				"<form name='information' action='#' onsubmit=\"return validateInput('"+verifyCode+"')\" method='post'>\n"+
 				
 					"<h2>"+"The seat Number: "+seatNumber+"</h2>\n"+
 					"<h2>"+"Booking time: "+bookingTime+"</h2>\n"+
 					"<h3>"+"Please complete the booking information "+"</h3>\n"+
 					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>\n"+
 					"<br />\n"+
-					"<input type='hidden' name='seatNumber' value='"+seatNumber+"' />\n"+
-					"<input type='hidden' name='bookingTime' value='"+bookingTime+"' />\n"+
-				//this is for Development					
-					// "UserID: <input type='text' name='userID' value='ABC' /><br />"+
-					// "Phone: <input type='text' name='phone' value='0123' /><br />"+
-					// "Address: <input type='text' name='address' value='ABC' /><br />"+
-					// "Email: <input type='text' name='email' value='ABC@ABC.AC' /><br />"+
-					// "Security code: <input type='text' name='inputSecurityCode' />"+
-					// verifyCode+"<br />"+ //Security code
 				//this is for Release
-					
+				/////////////////
 					"UserID: <input type='text' name='userID' /><br />\n"+
 					"Phone: <input type='text' name='Phone' /><br />\n"+
 					"Address: <input type='text' name='Address' /><br />\n"+
 					"Email: <input type='text' name='email' /><br />\n"+
 					"Security code: <input type='text' name='inputSecurityCode' />"+
 					verifyCode+"<br />\n"+ //Security code
-					
+
+					//this is for Development					
+					// "UserID: <input type='text' name='userID' value='ABC' /><br />"+
+					// "Phone: <input type='text' name='phone' value='0123' /><br />"+
+					// "Address: <input type='text' name='address' value='ABC' /><br />"+
+					// "Email: <input type='text' name='email' value='ABC@ABC.AC' /><br />"+
+					// "Security code: <input type='text' name='inputSecurityCode' />"+
+					// verifyCode+"<br />"+ //Security code
+				////////////////////////////////				
+				
+				
 					"<input type='submit' value='Submit' />\n"+
 					"<input type='reset' value='clear' />\n"+
 				"</form>\n"+
@@ -70,12 +72,17 @@ public class BookingSeatPage extends HttpServlet {
 			outHTML.close(); //always close the output writer
 		}
 
-	} 
+	}
 
 
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
+		securityCode=request.getParameter("inputSecurityCode");
+		if (!securityCode.equals(verifyCode)){
+			doGet(request,response);
+			return;
+		}
 		//get all information data
 		
 
@@ -83,7 +90,7 @@ public class BookingSeatPage extends HttpServlet {
 		phone=request.getParameter("phone");
 		address=request.getParameter("address");
 		email=request.getParameter("email");
-		securityCode=request.getParameter("inputSecurityCode");
+
 
 		//get users and seats list from data file
 
@@ -114,7 +121,7 @@ public class BookingSeatPage extends HttpServlet {
 						"<html>\n"+
 
 							"<head>\n"+
-							"<meta charset='utf-8'>\n"+
+								"<meta charset='utf-8'>\n"+
 								"<title>Booking a Seat</title>\n"+
 							"</head>\n"+
 							"<body>\n"+
@@ -162,10 +169,6 @@ public class BookingSeatPage extends HttpServlet {
 			newUser.addSeat(seatNumber);
 			addNewUser(newUser);
 		}
-			
-	
-
-
 		// new a seat object
 		Seat newSeat=new Seat();			
 
@@ -181,13 +184,6 @@ public class BookingSeatPage extends HttpServlet {
 
 		saveSeatInformation();
 		saveUserInformation();
-		
-
-
-		
-
-
-
 
 		//return message develop used!!!!!
 		//Client part message
@@ -210,11 +206,11 @@ public class BookingSeatPage extends HttpServlet {
 			inputData.close();
 			inputFile.close();
 		}catch(IOException i){
-			System.out.println(" file not found");
+			System.out.println(" File not found");
 			i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException c){
-			System.out.println(" class not found");
+			System.out.println(" Class not found");
 			c.printStackTrace();
 			return;
 		}
@@ -237,6 +233,7 @@ public class BookingSeatPage extends HttpServlet {
 				//System.out.printf("seat information data is saved");
 				
 			}catch(IOException outE){
+				System.out.println(" File not found");
 				outE.printStackTrace();
 
 			}
@@ -250,6 +247,8 @@ public class BookingSeatPage extends HttpServlet {
 		  
 
 	}
+	
+	//add a new seat
 	public void addNewSeat(Seat newSeat){
 		
 		if (seatsList != null){
@@ -258,6 +257,7 @@ public class BookingSeatPage extends HttpServlet {
 			for (int i=0;i<seatsList.length;i++){
 				if (seatsList[i]==null){
 					seatsList[i]=newSeat;
+					
 					System.out.println(" newSeat: ["+i+"]");
 					break;
 				}
@@ -269,13 +269,15 @@ public class BookingSeatPage extends HttpServlet {
 		}
 		
 	}
-
+	
+	// add a new user
 	public void addNewUser(User newUser){
 
 		if (usersList != null){
 			for (int i=1;i<usersList.length;i++){
 				if (usersList[i]==null){
 					usersList[i]=newUser;
+					
 					System.out.println(" newUser: ["+i+"]");
 					break;
 				}
