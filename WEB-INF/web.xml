@@ -11,7 +11,7 @@
     </session-config>
 	
 	
-<!-- add by bibby-->      
+<!-- Assignment 1 ONLINE SEATS BOOKING SYSTEM Binbin Wang -->      
     <servlet>
         <servlet-name>c3214157_assignment1</servlet-name>
         <servlet-class>c3214157_assignment1</servlet-class>

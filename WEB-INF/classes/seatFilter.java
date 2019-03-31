@@ -1,3 +1,12 @@
+// University of Newcastle
+// School of Electrical Engineering and Computer Science
+// SENG2050 Web Engineering
+// Assignment 1 ONLINE SEATS BOOKING SYSTEM
+// Author: Binbin Wang
+// Student No: 3214157
+// Due Date: 31-03-2019
+// Unusable seat Filters
+
 import java.io.*;
 import javax.servlet.*;
 
@@ -5,15 +14,17 @@ public class seatFilter implements Filter {
 	private Seat[] seatsList;
 	private String seatNumber;
 	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";
+	// do filter if seat unavailable, return a warning web page
 	public void doFilter(ServletRequest request, ServletResponse response,
 	FilterChain chain) throws IOException, ServletException {
 		getSeatList();
 		String seatNumber=request.getParameter("seatNumber");//get the selected seat Number
 		int seatArryNum=this.getBookedNumber(seatNumber);
-		System.out.println("run filter!!!");
+		//seat Filters
 		if(seatArryNum<0){
 			chain.doFilter(request, response);
 		}else{
+			//unavailable seat warning page
 			response.setContentType("text/html");
 			PrintWriter outHTML = response.getWriter();
 			String htmlString="<!DOCTYPE HTML>\n"+
@@ -38,25 +49,24 @@ public class seatFilter implements Filter {
 		}
 	}
 
-	//get booked seat number taht in seats[] 
-	public int getBookedNumber(String seatNum){
-		//System.out.println("seatN: "+seatNum+" .");
+	//get booked seat number taht in seats[] array
+	private int getBookedNumber(String seatNum){
+
 		if (seatsList != null){
 			for (int i=0;i<seatsList.length;i++){
 				if (seatsList[i]!=null){
 					if (seatNum.equals(seatsList[i].getSeatsNumber())){
-						//System.out.println("find a booked: "+seatNum+" .");
-						return i;
+						return i; //return the number of seats array 
 					}
 				}
 			}
 			
 		}
-		return -1;
+		return -1; //not find return -1
 	}
 	
 	//get seatlist if not find file create a new one
-	public void getSeatList(){
+	private void getSeatList(){
 		
 		try{
 			FileInputStream seatsFile = new FileInputStream(addressSeatsData);
@@ -73,21 +83,19 @@ public class seatFilter implements Filter {
 				seatsDataOut.close();
 				seatsDataFileOut.close();
 				
-				//System.out.printf("seat information data is saved");
-				
+
 			}catch(IOException outE){
-				System.out.println("File not found-seatFilter");
+
 				outE.printStackTrace();
 			}
-			//i.printStackTrace();
+			i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException c){
 			System.out.println("Class not found-seatFilter");
 			c.printStackTrace();
 			return;
 		}
-		  
-		  //System.out.println("get a seatNum: " + seatsList[0].getSeatsNumber());
+
 	}
 	
 }

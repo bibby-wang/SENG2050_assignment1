@@ -1,3 +1,11 @@
+// University of Newcastle
+// School of Electrical Engineering and Computer Science
+// SENG2050 Web Engineering
+// Assignment 1 ONLINE SEATS BOOKING SYSTEM
+// Author: Binbin Wang
+// Student No: 3214157
+// Due Date: 31-03-2019
+
 //check is input emputy
 function validateEmpty(inputVar){
 
@@ -54,10 +62,9 @@ function validateSecurityCode(verifyCode){
 
 //check input
 function validateInput(sCode){
-	if(validateUserID() && validateEmail() && validateSecurityCode(sCode)){
+	if(validateUserID() && validateEmail() && validateSecurityCode(sCode)){ //CHECK UserID email securitycode
 		return true;
 	}else{
-
 		return false;
 	}
 }

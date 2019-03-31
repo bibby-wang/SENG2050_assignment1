@@ -1,3 +1,11 @@
+// University of Newcastle
+// School of Electrical Engineering and Computer Science
+// SENG2050 Web Engineering
+// Assignment 1 ONLINE SEATS BOOKING SYSTEM
+// Author: Binbin Wang
+// Student No: 3214157
+// Due Date: 31-03-2019
+
 public class User implements java.io.Serializable{
 	private String userID;
 	private String phone;
@@ -10,7 +18,6 @@ public class User implements java.io.Serializable{
 		phone="";
 		address="";
 		email="";
-		//SecurityCode="";
 		threeSeats=new String[3];	
 	}
 	
@@ -28,13 +35,11 @@ public class User implements java.io.Serializable{
 	public void setEmail(String email){
 		this.email=email;
 	}
-	// public void setSecurityCode(String SecurityCode){
-		// this.SecurityCode=SecurityCode;
-	// }
+
 	public boolean addSeat(String SeatNum){
-		//System.out.println("sssss "+getEmputySeatsNum()+" "+SeatNum+" "+threeSeats[0]);
-		if (getEmputySeatsNum()<3){
-			this.threeSeats[getEmputySeatsNum()]=SeatNum;
+		//check over 3 bookings
+		if (getEmptySeatsNum()<3){
+			this.threeSeats[getEmptySeatsNum()]=SeatNum;
 			return true;
 		}else{
 			return false;
@@ -54,21 +59,20 @@ public class User implements java.io.Serializable{
 	public String getEmail(){
 		return email;
 	}
-	// public String getSecurityCode(){
-		// return SecurityCode;
-	// }
 	public String[] getSeats(){
 		return threeSeats;
 	}
 	
+	//update all Infomation 
 	public void updateInfo(String phone, String address, String email){
 		this.phone=phone;
 		this.address=address;
 		this.email=email;
 	}
 	
-	//get Emputy seats Num Requirement: no more than 3
-	public int getEmputySeatsNum(){
+	//get the empty seats[] element mubler
+	// no empty return 4, Requirement is not more than 3 seats
+	private int getEmptySeatsNum(){
 		
 		int countNum=0;
 		for(int i=0;i<3;i++){
@@ -77,6 +81,8 @@ public class User implements java.io.Serializable{
 		return countNum;
 
 	}
+	
+	// format output
 	public String toString(){
 		String seats="null";
 		if (threeSeats[0]!=null){seats=" ,Seats[0]: "+threeSeats[0];}

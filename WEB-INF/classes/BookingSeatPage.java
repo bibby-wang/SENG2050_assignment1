@@ -1,3 +1,14 @@
+// University of Newcastle
+// School of Electrical Engineering and Computer Science
+// SENG2050 Web Engineering
+// Assignment 1 ONLINE SEATS BOOKING SYSTEM
+// Author: Binbin Wang
+// Student No: 3214157
+// Due Date: 31-03-2019
+// input form page
+// userID; phone; address; email; SecurityCode
+
+
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -8,20 +19,23 @@ import java.util.Random;
 public class BookingSeatPage extends HttpServlet {
 	private Seat[] seatsList;
 	private User[] usersList;
-	private String bookingTime,seatNumber,userID, phone, address, email, securityCode;
-	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";
-	private String addressUesrsData="../webapps/c3214157_assignment1/WEB-INF/data/usersData.ser";	
-	private String verifyCode;//get verify Code
+	private String bookingTime,seatNumber,userID, phone, address, email, securityCode, verifyCode;;
+	private String addressSeatsData="../webapps/c3214157_assignment1/WEB-INF/data/seatsData.ser";//address of seats data
+	private String addressUesrsData="../webapps/c3214157_assignment1/WEB-INF/data/usersData.ser";//address of users data	
 
+
+	// get information from main page eg. bookingTime seatNumber
     public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		PrintWriter outHTML = response.getWriter();
-		String htmlString="<!DOCTYPE HTML>\n";
+		
 		seatNumber=request.getParameter("seatNumber");//get the selected seat Number
 		bookingTime=request.getParameter("bookingTime");//get the booking time
-		verifyCode=this.createSecurityCode();//get verify Code
-
-		htmlString+=
+		verifyCode=this.createSecurityCode();//create verify Code
+		
+		PrintWriter outHTML = response.getWriter();		
+		// html web page code		
+		String htmlString="<!DOCTYPE HTML>\n";		
+ 		htmlString+=
 		"<html>\n"+
 			"<head>\n"+
 				"<meta charset='utf-8'>\n"+
@@ -38,7 +52,7 @@ public class BookingSeatPage extends HttpServlet {
 					"<h3>"+"Please complete the booking information "+"</h3>\n"+
 					"<h3><a href='SixtyFourSeatsTheatre'>"+"Back to choose other seat"+"</a></h3>\n"+
 					"<br />\n"+
-				//this is for Release
+				// input form 
 
 					"UserID: <input type='text' name='userID' /><br />\n"+
 					"Phone: <input type='text' name='phone' /><br />\n"+
@@ -46,19 +60,9 @@ public class BookingSeatPage extends HttpServlet {
 					"Email: <input type='text' name='email' /><br />\n"+
 					"Security code: <input type='text' name='inputSecurityCode' />"+
 					verifyCode+"<br />\n"+ //Security code
-				////////////////////////////////////
-					//this is for Development					
-					// "UserID: <input type='text' name='userID' value='ABC' /><br />"+
-					// "Phone: <input type='text' name='phone' value='0123' /><br />"+
-					// "Address: <input type='text' name='address' value='ABC' /><br />"+
-					// "Email: <input type='text' name='email' value='ABC@ABC.AC' /><br />"+
-					// "Security code: <input type='text' name='inputSecurityCode' />"+
-					// verifyCode+"<br />"+ //Security code
-				////////////////////////////////				
-				
-				
+					// two buttons one for submit other for clean all input
 					"<input type='submit' value='Submit' />\n"+
-					"<input type='reset' value='clear' />\n"+
+					" <input type='reset' value='clear' />\n"+
 				"</form>\n"+
 			"</body>\n"+
 		"</html>";
@@ -72,20 +76,12 @@ public class BookingSeatPage extends HttpServlet {
 	}
 
 
-
+	//post information to sever 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		//check secyrity code on sever site
-		// securityCode=request.getParameter("inputSecurityCode");
-		// if (!securityCode.equals(verifyCode)){
-			// System.out.println("=Security Code not match!");
-			// doGet(request,response);
-			// return;
-		// }
-		
-		//get all information data
-		
 
+		//get information data from request
+		
 		userID=request.getParameter("userID");
 		phone=request.getParameter("phone");
 		address=request.getParameter("address");
@@ -93,7 +89,7 @@ public class BookingSeatPage extends HttpServlet {
 		
 
 		//get users and seats list from data file
-
+		//seats list
 		if (seatsList!=null){
 			for (int i=0;i<seatsList.length;i++){
 				if (seatsList[i]!=null && seatsList[i].getSeatsNumber().equals(seatNumber)){
@@ -102,6 +98,8 @@ public class BookingSeatPage extends HttpServlet {
 				}
 			}	
 		}
+		
+		//users list
 		if (usersList!=null){
 			
 			boolean notFindID=true;
@@ -112,14 +110,14 @@ public class BookingSeatPage extends HttpServlet {
 					if (usersList[i].addSeat(seatNumber)){
 						//updata information
 						usersList[i].updateInfo(phone,address,email);
-						System.out.println("=="+userID+"===update=Done==");						
+						System.out.println("=="+userID+"===update=Done==");	//message in sever part					
 					}else{
 						threSeatFull=true;
 						
 						PrintWriter outHTML = response.getWriter();
+						//warning have more than 3 bookings
 						String htmlString="<!DOCTYPE HTML>\n"+
 						"<html>\n"+
-
 							"<head>\n"+
 								"<meta charset='utf-8'>\n"+
 								"<title>Booking a Seat</title>\n"+
@@ -135,14 +133,16 @@ public class BookingSeatPage extends HttpServlet {
 						}finally{
 							outHTML.close(); //always close the output writer
 						}
-						
+						// exit booking
 						return;
 					}
 					
 				}
 				
 			}
+			
 			if(notFindID){
+				// do not have same UserID
 				// new a user object
 				User newUser=new User();
 
@@ -157,6 +157,8 @@ public class BookingSeatPage extends HttpServlet {
 			}
 			
 		}else{
+			
+			//do not have any data in list
 			// new a user object
 			User newUser=new User();
 
@@ -169,6 +171,7 @@ public class BookingSeatPage extends HttpServlet {
 			newUser.addSeat(seatNumber);
 			addNewUser(newUser);
 		}
+		// Reservation
 		// new a seat object
 		Seat newSeat=new Seat();			
 
@@ -178,35 +181,30 @@ public class BookingSeatPage extends HttpServlet {
 		newSeat.setUserID(userID);
 
 		//save all information to file
-
-
 		addNewSeat(newSeat);
 
 		saveSeatInformation();
 		saveUserInformation();
+		
 
-		//return message develop used!!!!!
-		//Client part message
-		//PrintWriter out = response.getWriter();
-		//out.println(seatNumber+":"+userID+"; "+phone+"; "+address+"; "+email+"; "+securityCode);
-		//sever part message
-		//System.out.println(seatNumber+":"+userID+"; "+phone+"; "+address+"; "+email+"; "+securityCode);
-		System.out.println("============DONE==============");
-
+		System.out.println("============DONE=============="); // message in sever part	
+		//done all booking back to main page
 		response.sendRedirect("SixtyFourSeatsTheatre");		
 
 
 	}
-	public void getAllList(){
+	//get users and seats list
+	private void getAllList(){
+		//get seats to seatsList[]
 		try{
-			FileInputStream inputFile = new FileInputStream(addressSeatsData);
-			ObjectInputStream inputData = new ObjectInputStream(inputFile);
+			FileInputStream seatsFile = new FileInputStream(addressSeatsData);
+			ObjectInputStream inputData = new ObjectInputStream(seatsFile);
 			
 			seatsList = (Seat[]) inputData.readObject();
 			inputData.close();
-			inputFile.close();
+			seatsFile.close();
 		}catch(IOException i){
-			System.out.println(" File not found");
+			System.out.println(" Seats File not found");// message in sever part
 			i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException c){
@@ -215,6 +213,7 @@ public class BookingSeatPage extends HttpServlet {
 			return;
 		}
 		
+		//get users to usersList[]
 		try{
 			FileInputStream usersFile = new FileInputStream(addressUesrsData);
 			ObjectInputStream usersData = new ObjectInputStream(usersFile);
@@ -230,14 +229,12 @@ public class BookingSeatPage extends HttpServlet {
 				usersDataOut.close();
 				usersDataFileOut.close();
 				
-				//System.out.printf("seat information data is saved");
-				
 			}catch(IOException outE){
-				System.out.println(" File not found");
+
 				outE.printStackTrace();
 
 			}
-			//i.printStackTrace();
+			i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException c){
 			System.out.println(" class not found");
@@ -248,17 +245,14 @@ public class BookingSeatPage extends HttpServlet {
 
 	}
 	
-	//add a new seat
-	public void addNewSeat(Seat newSeat){
-		
+	//add a new seat to list
+	private void addNewSeat(Seat newSeat){
+		//if not have seatslist yet, make a new one
 		if (seatsList != null){
-	
 			
 			for (int i=0;i<seatsList.length;i++){
 				if (seatsList[i]==null){
 					seatsList[i]=newSeat;
-					
-					//System.out.println(" newSeat: ["+i+"]");
 					break;
 				}
 			}
@@ -270,15 +264,13 @@ public class BookingSeatPage extends HttpServlet {
 		
 	}
 	
-	// add a new user
-	public void addNewUser(User newUser){
-
+	// add a new user to list
+	private void addNewUser(User newUser){
+		//if not have suerslist yet, make a new one
 		if (usersList != null){
 			for (int i=1;i<usersList.length;i++){
 				if (usersList[i]==null){
 					usersList[i]=newUser;
-					
-					//System.out.println(" newUser: ["+i+"]");
 					break;
 				}
 			}
@@ -290,8 +282,8 @@ public class BookingSeatPage extends HttpServlet {
 	}
 	
 	
-	//data Serialization
-	public void saveSeatInformation(){
+	//seat data Serialization save to file seatsData.ser
+	private void saveSeatInformation(){
 		
 		try{
 			
@@ -301,7 +293,7 @@ public class BookingSeatPage extends HttpServlet {
 			seatsDataOut.close();
 			seatsDataFileOut.close();
 			
-			System.out.printf("seat information data is saved");
+			System.out.println("seat information data is saved");
 			
 		}catch(IOException i){
 			i.printStackTrace();
@@ -309,8 +301,8 @@ public class BookingSeatPage extends HttpServlet {
 
 		
 	}	
-	//data Serialization
-	public void saveUserInformation(){
+	//User data Serialization save to file usersData.ser
+	private void saveUserInformation(){
 		try{
 
 			FileOutputStream usersDataFileOut = new FileOutputStream(addressUesrsData);
@@ -319,7 +311,7 @@ public class BookingSeatPage extends HttpServlet {
 			usersDataOut.close();
 			usersDataFileOut.close();
 			
-			System.out.printf("user information data is saved");
+			System.out.println("user information data is saved");
 			
 		}catch(IOException i){
 			i.printStackTrace();
@@ -329,8 +321,8 @@ public class BookingSeatPage extends HttpServlet {
 	}	
 	
 	//create the Security Code
-	public String createSecurityCode(){
-		int codeLength=6;
+	private String createSecurityCode(){
+		int codeLength=6;//total code number
 		String SecurityCode="";
 		//Set the source character
 		String[] sourceCode = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};

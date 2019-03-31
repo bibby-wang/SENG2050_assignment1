@@ -1,3 +1,14 @@
+// University of Newcastle
+// School of Electrical Engineering and Computer Science
+// SENG2050 Web Engineering
+// Assignment 1 ONLINE SEATS BOOKING SYSTEM
+// Sixty Four Seats Theatre 
+// Author: Binbin Wang
+// Student No: 3214157
+// Due Date: 31-03-2019
+// Main web page 
+// 8*8 seats matrix
+
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,14 +26,15 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 	throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter outHTML = response.getWriter();
-		String htmlString;
-		Date currentDate = new Date();
-		SimpleDateFormat formatDate = new SimpleDateFormat ("dd-MM-YY HH-mm-ss");
+		String htmlString;//page html code
+		Date currentDate = new Date();// get current date time
+		SimpleDateFormat formatDate = new SimpleDateFormat ("dd-MM-YY HH-mm-ss");//format data time style
 		String bookingTime=formatDate.format(currentDate);
 		//FORMAT HTML 
 		htmlString="<!DOCTYPE html>\n <html>\n"+
 		"<head>\n"+
 		"<meta charset='utf-8'>\n"+
+			//CSS code change the seats background-color, distinguish whether the seat is available
 			"<style type='text/css'>\n"+
 				"table {border: 1px}\n"+
 				"td {background-color: gray}\n"+
@@ -36,6 +48,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		"<h2>"+"online seats booking system"+"</h2>\n"+
 		"<h4>"+"Current time: "+bookingTime+"</h4>\n"+
 		"<h4>"+"please choose a seat"+"</h4>\n"+
+		"<h5>"+"Green is the available seat"+"</h5>\n"+
 		"<table>\n";
 
 		this.getSeatList();
@@ -44,7 +57,7 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 			for (int j=1;j<=8;j++){
 				char seat;
 				seat = (char)i;
-				//output all seats 8*8 matrix 
+				//output all seats. 8*8 matrix 
 				String tempSeatNum=seat+""+j;
 				htmlString+=("<td class='"+this.isBooked(tempSeatNum)+"'>\n"+
 								"<h3>"+
@@ -64,9 +77,9 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 		}
 
 	}
-	
+	//get seat list from data file. if not have file, create a new empty seatsData file.
 	public void getSeatList(){
-		
+		//open seatsData file
 		try{
 			FileInputStream seatsFile = new FileInputStream(addressSeatsData);
 			ObjectInputStream seatData = new ObjectInputStream(seatsFile);
@@ -75,37 +88,33 @@ public class SixtyFourSeatsTheatre extends HttpServlet {
 			seatsFile.close();
 		}catch(IOException i){
 			try{
-				
+				//if not find seatsData, create a new seatsData file "seatsData.ser"
 				FileOutputStream seatsDataFileOut = new FileOutputStream(addressSeatsData);
 				ObjectOutputStream seatsDataOut = new ObjectOutputStream(seatsDataFileOut);
 				seatsDataOut.writeObject(seatsList);
 				seatsDataOut.close();
 				seatsDataFileOut.close();
 				
-				//System.out.printf("seat information data is saved");
-				
 			}catch(IOException outE){
 				outE.printStackTrace();
 
 			}
-			//i.printStackTrace();
+			i.printStackTrace();
 			return;
 		}catch(ClassNotFoundException classE){
 			System.out.println(" class not found");
 			classE.printStackTrace();
 			return;
 		}
-		  
-		  //System.out.println("get a seatNum: " + seatsList[0].getSeatsNumber());
+
 	}
-		
-	public String isBooked(String seatNum){
-		//System.out.println("seatN: "+seatNum+" .");
+	// Determine whether to book use for html code in CSS part
+	private String isBooked(String seatNum){
+
 		if (seatsList != null){
 			for (int i=0;i<seatsList.length;i++){
 				if (seatsList[i]!=null){
 					if (seatNum.equals(seatsList[i].getSeatsNumber())){
-						//System.out.println("find a booked: "+seatNum+" .");
 						return "Booked";
 					}
 				}

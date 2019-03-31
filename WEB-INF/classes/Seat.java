@@ -1,13 +1,22 @@
+// University of Newcastle
+// School of Electrical Engineering and Computer Science
+// SENG2050 Web Engineering
+// Assignment 1 ONLINE SEATS BOOKING SYSTEM
+// Author: Binbin Wang
+// Student No: 3214157
+// Due Date: 31-03-2019
+
 public class Seat implements java.io.Serializable{
 	private String seatNumber;
 	private String userID;
 	private String bookingTime;
+	//Constructor
 	public Seat(){
 		userID="";
 		bookingTime="";
 		seatNumber="";
-		}
-
+	}
+	//set all data
 	public void setData(String seatNumber, String userID,String bookingTime){
 		this.setSeatNumber(seatNumber);
 		this.setUserID(userID);
@@ -35,6 +44,8 @@ public class Seat implements java.io.Serializable{
 	public String getBookingTime(){
 		return bookingTime;
 	}
+	
+	//output foramt
 	public String toString(){
 		return "seatNumber: "+seatNumber+
 				" ,userID: "+userID+

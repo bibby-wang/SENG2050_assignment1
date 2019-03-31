@@ -1,3 +1,11 @@
+// University of Newcastle
+// School of Electrical Engineering and Computer Science
+// SENG2050 Web Engineering
+// Assignment 1 ONLINE SEATS BOOKING SYSTEM
+// Author: Binbin Wang
+// Student No: 3214157
+// Due Date: 31-03-2019
+// show all data 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
